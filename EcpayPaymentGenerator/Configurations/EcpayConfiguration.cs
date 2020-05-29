@@ -1,13 +1,15 @@
 using System;
+using System.Collections.Generic;
 using EcpayPaymentGenerator.Arguments;
-using EcpayPaymentGenerator.ViewModels;
+using EcpayPaymentGenerator.Models;
+using EcpayPaymentGenerator.Enums;
+using EcpayPaymentGenerator.Extensions;
 
 namespace EcpayPaymentGenerator.Configurations
 {
     public class EcpayConfiguration
     {
-        private readonly PaymentViewModel _payment = new PaymentViewModel();
-        private readonly ReturnArgs _returnArgs = new ReturnArgs();
+        private ReturnArgs _returnArgs;
         private ServiceArgs _serviceArgs;
 
         public EcpayServiceConfiguration SendTo { get; internal set; }
@@ -16,6 +18,7 @@ namespace EcpayPaymentGenerator.Configurations
 
         public EcpayConfiguration()
         {
+            _returnArgs = new ReturnArgs();
             SendTo = new EcpayServiceConfiguration(this, args => _serviceArgs = args);
             ReturnTo = new EcpayReturnConfiguration(this,
                 returnUrl => _returnArgs.ReturnURL = returnUrl,
@@ -24,10 +27,35 @@ namespace EcpayPaymentGenerator.Configurations
             ReadFrom = new EcpaySettingsConfiguration(this);
         }
 
-        public PaymentViewModel CreatePayment(string description, string items, string ClientBackURL, string remark, string ignorePayment)
+        public Payment CreatePayment(string tradeTitle, string description, IEnumerable<Item> items, string itemUrl, string remark = null, IgnorePayment ignorePayment = IgnorePayment.Default)
         {
-            throw new NotImplementedException("Not Implemented!");
+            var now = DateTime.Now;
+            var tradeNo = ValidateTradeTitle(tradeTitle) ? GenerateTradeNo(tradeTitle, now) : throw new ArgumentOutOfRangeException(nameof(tradeTitle));
+
+            var payment = new Payment
+            {
+                URL = _serviceArgs.URL,
+                MerchantID = _serviceArgs.MerchantID,
+                MerchantTradeNo = tradeNo,
+                MerchantTradeDate = now.ToString("yyyy/MM/dd HH:mm:ss"),
+                CheckMacValue = "", // TODO:
+                ReturnURL = _returnArgs.ReturnURL,
+                ClientBackURL = _returnArgs.ClientBackURL,
+                TradeDesc = description,
+                ItemURL = itemUrl,
+                Remark = remark,
+                ItemName = items.ConvertToItemName(),
+                TotalAmount = items.TotalAmount(),
+                IgnorePayment = ignorePayment.ToString().Replace(", ", "#"),
+                ChoosePayment = "ALL",
+                PaymentType = "aio",
+                EncryptType = 1
+            };
+
+            return payment;
         }
+        private bool ValidateTradeTitle(string tradeTitle) => !(string.IsNullOrEmpty(tradeTitle) || string.IsNullOrWhiteSpace(tradeTitle) || tradeTitle.Length > 5);
+        private string GenerateTradeNo(string tradeTitle, DateTime now) => (tradeTitle + now.ToString("MMddHHmmssfff")).PadRight(20, '0');
     }
 
     public class EcpayServiceConfiguration

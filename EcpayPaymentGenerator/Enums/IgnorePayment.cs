@@ -13,5 +13,6 @@ namespace EcpayPaymentGenerator.Enums
         ATM = 0b_0000_0010,  // 2
         CVS = 0b_0000_0100,  // 4
         BARCODE = 0b_0000_1000,  // 8
+        Default = ATM & CVS //
     }
 }
