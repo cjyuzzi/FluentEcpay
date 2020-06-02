@@ -27,7 +27,8 @@ namespace EcpayPaymentGenerator.Configurations
             ReadFrom = new EcpaySettingsConfiguration(this);
         }
 
-        public Payment CreatePayment(string tradeTitle, string description, IEnumerable<Item> items, string itemUrl, string remark = null, IgnorePayment ignorePayment = IgnorePayment.Default)
+        public Payment CreatePayment(string tradeTitle, string description, IEnumerable<Item> items, string itemUrl, string remark = null,
+         IgnorePayment ignorePayment = IgnorePayment.ATM | IgnorePayment.CVS)
         {
             var now = DateTime.Now;
             var tradeNo = ValidateTradeTitle(tradeTitle) ? GenerateTradeNo(tradeTitle, now) : throw new ArgumentOutOfRangeException(nameof(tradeTitle));
@@ -46,7 +47,7 @@ namespace EcpayPaymentGenerator.Configurations
                 Remark = remark,
                 ItemName = items.ConvertToItemName(),
                 TotalAmount = items.TotalAmount(),
-                IgnorePayment = ignorePayment.ToString().Replace(", ", "#"),
+                IgnorePayment = ignorePayment.ToString("G").Replace(", ", "#"),
                 ChoosePayment = "ALL",
                 PaymentType = "aio",
                 EncryptType = 1

@@ -1,11 +1,9 @@
-using System;
-
 namespace EcpayPaymentGenerator.Models
 {
     /// <summary>
-    /// 綠界金流的訂單產生器，包含介接服務所需要的所有必要及預設參數。
+    /// 介接綠界金流服務的訂單參數。
     /// </summary>
-    public class Payment : IEquatable<Payment>
+    public class Payment
     {
         public string URL { get; set; }
         public string MerchantID { get; set; }
@@ -23,12 +21,5 @@ namespace EcpayPaymentGenerator.Models
         public string IgnorePayment { get; set; }
         public string PaymentType { get; set; }
         public int EncryptType { get; set; }
-
-        public bool Equals(Payment other)
-        {
-            if (other is null)throw new ArgumentNullException(nameof(other));
-
-            throw new NotImplementedException();
-        }
     }
 }
