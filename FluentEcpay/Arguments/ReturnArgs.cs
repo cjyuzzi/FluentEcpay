@@ -1,4 +1,4 @@
-namespace EcpayPaymentGenerator.Arguments
+namespace FluentEcpay.Arguments
 {
     public class ReturnArgs
     {

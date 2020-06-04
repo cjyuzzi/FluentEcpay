@@ -1,12 +1,12 @@
-﻿using System;
+using System;
 
-namespace EcpayPaymentGenerator.Enums
+namespace FluentEcpay.Enums
 {
     /// <summary>
-    /// 隱藏的付款方式。
+    /// 隱藏付款方式。
     /// </summary>
     [Flags]
-    public enum IgnorePayment
+    public enum IgnoreMethod
     {
         Credit = 0,
         WebATM = 1,

@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using EcpayPaymentGenerator.Arguments;
-using EcpayPaymentGenerator.Models;
-using EcpayPaymentGenerator.Enums;
-using EcpayPaymentGenerator.Extensions;
+using FluentEcpay.Arguments;
+using FluentEcpay.Models;
+using FluentEcpay.Enums;
+using FluentEcpay.Extensions;
 
-namespace EcpayPaymentGenerator.Configurations
+namespace FluentEcpay.Configurations
 {
     public class EcpayConfiguration
     {
@@ -47,7 +47,7 @@ namespace EcpayPaymentGenerator.Configurations
                 Remark = remark,
                 ItemName = items.ConvertToItemName(),
                 TotalAmount = items.TotalAmount(),
-                IgnorePayment = ignorePayment.ToString("G").Replace(", ", "#"),
+                IgnorePayment = ignorePayment.ToString("F").Replace(", ", "#"),
                 ChoosePayment = "ALL",
                 PaymentType = "aio",
                 EncryptType = 1

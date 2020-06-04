@@ -1,8 +1,8 @@
 using System.Linq;
 using System.Collections.Generic;
-using EcpayPaymentGenerator.Models;
+using FluentEcpay.Models;
 
-namespace EcpayPaymentGenerator.Extensions
+namespace FluentEcpay.Extensions
 {
     public static class EcpayExtension
     {

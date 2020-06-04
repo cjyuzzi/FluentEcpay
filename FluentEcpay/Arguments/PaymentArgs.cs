@@ -1,7 +1,7 @@
 ﻿using System.Net;
-using EcpayPaymentGenerator.Enums;
+using FluentEcpay.Enums;
 
-namespace EcpayPaymentGenerator.Arguments
+namespace FluentEcpay.Arguments
 {
     /// <summary>
     /// 訂單的參數。

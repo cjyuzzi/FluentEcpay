@@ -1,4 +1,4 @@
-namespace EcpayPaymentGenerator.Models
+namespace FluentEcpay.Models
 {
     public class Item
     {

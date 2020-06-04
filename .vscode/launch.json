@@ -10,9 +10,9 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/EcpayPaymentGenerator.Test/bin/Debug/netcoreapp3.1/EcpayPaymentGenerator.Test.dll",
+            "program": "${workspaceFolder}/FluentEcpay.Test/bin/Debug/netcoreapp3.1/FluentEcpay.Test.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/EcpayPaymentGenerator.Test",
+            "cwd": "${workspaceFolder}/FluentEcpay.Test",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false

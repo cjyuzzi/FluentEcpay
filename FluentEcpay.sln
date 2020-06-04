@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcpayPaymentGenerator", "EcpayPaymentGenerator\EcpayPaymentGenerator.csproj", "{DBAAB953-D7D7-4C7C-A84A-66BF5EA79568}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentEcpay", "FluentEcpay\FluentEcpay.csproj", "{DBAAB953-D7D7-4C7C-A84A-66BF5EA79568}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcpayPaymentGenerator.Test", "EcpayPaymentGenerator.Test\EcpayPaymentGenerator.Test.csproj", "{8CFAE6B8-0076-4627-8217-04361CADFC3C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentEcpay.Test", "FluentEcpay.Test\FluentEcpay.Test.csproj", "{8CFAE6B8-0076-4627-8217-04361CADFC3C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EcpayPaymentGenerator\EcpayPaymentGenerator.csproj" />
+    <ProjectReference Include="..\FluentEcpay\FluentEcpay.csproj" />
   </ItemGroup>
 
 </Project>
