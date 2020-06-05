@@ -1,11 +1,11 @@
-using System;
+using FluentEcpay.Enums;
 
 namespace FluentEcpay.Interfaces
 {
     public interface IPaymentSendConfiguration
     {
         IPaymentConfiguration ToApi(string url);
-        IPaymentConfiguration ToMerchant(string id, Action<IMerchantOptionsConfiguration> configureMerchant);
-        IPaymentConfiguration UsingHash(string key, string iv, Action<IHashOptionsConfiguration> configureHash);
+        IPaymentConfiguration ToMerchant(string merChantId, string storeId = null, bool isPlatform = false);
+        IPaymentConfiguration UsingHash(string key, string iv, HashAlgorithm algorithm = HashAlgorithm.SHA256);
     }
 }

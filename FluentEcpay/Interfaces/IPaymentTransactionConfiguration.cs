@@ -7,8 +7,9 @@ namespace FluentEcpay.Interfaces
 {
     public interface IPaymentTransactionConfiguration
     {
-        IPaymentConfiguration New(string no, string description, DateTime date, Action<ITransactionOptionsConfiguration> configureTransaction);
-        IPaymentConfiguration WithItems(List<Item> items, Action<IItemOptionsConfiguration> configureItems);
-        IPaymentConfiguration UseMethod(PaymentMethod method, Action<IMethodOptionsConfiguration> configureMethod);
+        IPaymentConfiguration WithCustomFields(object field1, object field2, object field3, object field4);
+        IPaymentConfiguration New(string no, string description, DateTime date, string remark = null);
+        IPaymentConfiguration UseMethod(PaymentMethod method, PaymentSubMethod? sub = null, PaymentIgnoreMethod? ignore = null);
+        IPaymentConfiguration WithItems(List<Item> items, string url = null);
     }
 }
