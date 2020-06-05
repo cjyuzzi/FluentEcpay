@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Xunit;
 using FluentAssertions;
 using FluentEcpay.Configurations;
-using FluentEcpay.interfaces;
+using FluentEcpay.Interfaces;
 using FluentEcpay.Models;
 using FluentEcpay.Enums;
 
@@ -51,8 +51,9 @@ namespace FluentEcpay.UnitTests
             var transaction = new
             {
                 Method = PaymentMethod.Credit,
-                IgnoreMethod = PaymentMethod.ATM | PaymentMethod.CVS,
-                // TODO: No = "",
+                SubMethod = PaymentSubMethod.TAISHIN,
+                IgnoreMethod = PaymentIgnoreMethod.ATM | PaymentIgnoreMethod.CVS,
+                No = "",
                 Description = "急診醫學會購物系統",
                 Date = now,
                 Remark = "去糖去冰",
@@ -83,26 +84,28 @@ namespace FluentEcpay.UnitTests
             // Act
             IPayment actual = new PaymentConfiguration()
                 .Send.ToApi(url: service.Url)
-                .Send.ToMerchant(id: service.MerchantId, isPlatform: false)
-                .Send.ToStore(id: null)
-                .Send.UsingHash(key: service.HashKey, iv: service.HashIV, algorithm: HashAlgorithm.SHA256)
+                .Send.ToMerchant(id: service.MerchantId, configureMerchant: options => options
+                    .ToStore(id: null)
+                    .IsPlatform())
+                .Send.UsingHash(key: service.HashKey, iv: service.HashIV, configureHash: options => options
+                    .Algorithm(HashAlgorithm.SHA256))
                 .Return.ToServer(url: service.ServerUrl)
-                .Return.ToClient(url: service.ClientUrl, needExtraPaidInfo: false)
+                .Return.ToClient(url: service.ClientUrl, configureClient: options => options
+                    .NeedExtraPaidInfo())
                 .Transaction.New(
                     no: transaction.No,
                     description: transaction.Description,
-                    date: transaction.Date,
-                    remark: transaction.Remark)
-                .Transaction.WithItems(
-                    items: transaction.Items,
-                    url: transaction.ItemUrl)
+                    date: transaction.Date, configureTransaction: options => options
+                    .Remark(transaction.Remark))
+                .Transaction.WithItems(items: transaction.Items, configureItems: options => options
+                    .URL(transaction.ItemUrl))
                 .Transaction.UseMethod(
-                    method: transaction.Method,
-                    configure: options => options
-                        .Sub(transaction.SubMethod)
-                        .Ignore(transaction.IgnoreMethod))
+                    method: transaction.Method, configureMethod: options => options
+                    .Sub(transaction.SubMethod)
+                    .Ignore(transaction.IgnoreMethod))
                 .Generate();
-                // TODO: CustomField, Invoice, Language
+
+            // TODO: CustomField, Invoice, Language
 
             // Assert
             actual.Should().NotBeNull();

@@ -6,7 +6,7 @@ namespace FluentEcpay.Enums
     /// 隱藏付款方式。
     /// </summary>
     [Flags]
-    public enum IgnoreMethod
+    public enum PaymentIgnoreMethod
     {
         Credit = 0,
         WebATM = 1,

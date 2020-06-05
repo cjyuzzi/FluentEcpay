@@ -1,4 +1,4 @@
-using FluentEcpay.interfaces;
+using FluentEcpay.Interfaces;
 
 namespace FluentEcpay.Models
 {
