@@ -8,6 +8,16 @@ namespace FluentEcpay.Configurations
 {
     public class PaymentTransactionConfiguration : IPaymentTransactionConfiguration
     {
+        private PaymentConfiguration _configuration;
+        private Action<IPayment> _setPayment;
+        private IPayment _payment;
+
+        public PaymentTransactionConfiguration(PaymentConfiguration paymentConfiguration, Action<IPayment> setPayment)
+        {
+            _configuration = paymentConfiguration;
+            _setPayment = setPayment;
+        }
+
         public IPaymentConfiguration New(string no, string description, DateTime date, string remark = null)
         {
             throw new NotImplementedException();
