@@ -10,7 +10,7 @@ namespace FluentEcpay.Models
         public string StoreID { get; set; }
         public string MerchantTradeDate { get; set; }
         public string PaymentType { get; set; }
-        public int TotalAmount { get; set; }
+        public int? TotalAmount { get; set; }
         public string TradeDesc { get; set; }
         public string ItemName { get; set; }
         public string ReturnURL { get; set; }
@@ -30,7 +30,8 @@ namespace FluentEcpay.Models
         public string CustomField2 { get; set; }
         public string CustomField3 { get; set; }
         public string CustomField4 { get; set; }
-        public int EncryptType { get; set; }
+        public int? EncryptType { get; set; }
         public string Language { get; set; }
+        public int? UnionPay { get; set; }
     }
 }

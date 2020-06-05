@@ -39,7 +39,7 @@ namespace FluentEcpay.Interfaces
         /// 交易金額。請帶整數，不可有小數點，僅限新台幣。測試機有付款金額的限制。
         /// </summary>
         /// <value>int</value>
-        int TotalAmount { get; set; }
+        int? TotalAmount { get; set; }
         /// <summary>
         /// 交易描述。傳送到綠界前，請將參數值先做 UrlEncode。
         /// </summary>
@@ -139,11 +139,16 @@ namespace FluentEcpay.Interfaces
         /// CheckMacValue 加密類型。請固定填入1，使用SHA256加密。
         /// </summary>
         /// <value>int</value>
-        int EncryptType { get; set; }
+        int? EncryptType { get; set; }
         /// <summary>
         /// 語系設定。預設語系為中文，若要變更語系參數值請帶： 英語：ENG、韓語：KOR、日語：JPN、簡體中文：CHI。
         /// </summary>
         /// <value></value>
         string Language { get; set; }
+        /// <summary>
+        /// 銀聯卡交易選項。可帶入以下選項: 0: 消費者於交易頁面可選擇是否使用銀聯交易。1: 只使用銀聯卡交易，且綠界會將交易頁面直接導到銀聯網站。2: 不可使用銀聯卡，綠界會將交易頁面隱藏銀聯選項。
+        /// </summary>
+        /// <value>Int 預設值：0</value>
+        int? UnionPay { get; set; }
     }
 }

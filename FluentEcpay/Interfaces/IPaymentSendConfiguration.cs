@@ -6,6 +6,6 @@ namespace FluentEcpay.Interfaces
     {
         IPaymentConfiguration ToApi(string url);
         IPaymentConfiguration ToMerchant(string merChantId, string storeId = null, bool isPlatform = false);
-        IPaymentConfiguration UsingHash(string key, string iv, HashAlgorithm algorithm = HashAlgorithm.SHA256);
+        IPaymentConfiguration UsingHash(string key, string iv, HashAlgorithm? algorithm = HashAlgorithm.SHA256);
     }
 }

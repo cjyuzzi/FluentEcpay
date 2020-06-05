@@ -22,15 +22,15 @@ namespace FluentEcpay.UnitTests
                 MerchantID = "2000132",
                 ReturnURL = "https://tsem/api/payment/callback",
                 ClientBackURL = "https://tsem/payment/success",
-                MerchantTradeNo = "",
-                TradeDesc = "急診醫學會購物系統",
+                MerchantTradeNo = "", // TODO
+                TradeDesc = "%e6%80%a5%e8%a8%ba%e9%86%ab%e5%ad%b8%e6%9c%83%e8%b3%bc%e7%89%a9%e7%b3%bb%e7%b5%b1",
                 MerchantTradeDate = now.ToString("yyyy/MM/dd HH:mm:ss"),
                 ChoosePayment = "Credit",
-                ItemName = "手機 20 新台幣 x 2#隨身碟 60 新台幣 x 1",
+                ItemName = "手機 20 新臺幣 x 2#隨身碟 60 新臺幣 x 1",
                 TotalAmount = 100,
                 PaymentType = "aio",
                 EncryptType = 1,
-                CheckMacValue = "",
+                CheckMacValue = "", // TODO
                 #region Optional
                 StoreID = null,
                 ItemURL = null,
@@ -61,7 +61,7 @@ namespace FluentEcpay.UnitTests
             };
             var transaction = new
             {
-                No = "",
+                No = "tsem00001",
                 Description = "急診醫學會購物系統",
                 Date = now,
                 Method = PaymentMethod.Credit,
@@ -119,7 +119,9 @@ namespace FluentEcpay.UnitTests
 
             // Assert
             actual.Should().NotBeNull();
-            actual.Should().BeEquivalentTo(expected);
+            actual.Should().BeEquivalentTo(expected, options => options
+                 .Excluding(p => p.MerchantTradeNo)
+                 .Excluding(p => p.CheckMacValue));
         }
     }
 }
