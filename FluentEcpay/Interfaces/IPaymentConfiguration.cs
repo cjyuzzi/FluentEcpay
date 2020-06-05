@@ -1,5 +1,3 @@
-using FluentEcpay.Interfaces;
-
 namespace FluentEcpay.Interfaces
 {
     public interface IPaymentConfiguration
