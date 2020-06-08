@@ -3,7 +3,7 @@
     /// <summary>
     /// 付款方式。
     /// </summary>
-    public enum PaymentMethod
+    public enum EPaymentMethod
     {
         Credit,
         Union,

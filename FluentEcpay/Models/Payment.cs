@@ -22,7 +22,6 @@ namespace FluentEcpay.Models
         public string ChooseSubPayment { get; set; }
         public string OrderResultURL { get; set; }
         public string NeedExtraPaidInfo { get; set; }
-        public string DeviceSource { get; set; }
         public string IgnorePayment { get; set; }
         public string PlatformID { get; set; }
         public string InvoiceMark { get; set; }

@@ -1,6 +1,6 @@
 namespace FluentEcpay.Enums
 {
-    public enum PaymentSubMethod
+    public enum EPaymentSubMethod
     {
         TAISHIN
     }

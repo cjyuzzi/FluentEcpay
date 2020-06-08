@@ -1,9 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Web;
+using FluentEcpay.Enums;
 using FluentEcpay.Interfaces;
 
 namespace FluentEcpay.Configurations
@@ -12,16 +8,18 @@ namespace FluentEcpay.Configurations
     {
         #region Private Fields
         private readonly string _paymentType = "aio";
-        private int? _encryptType;
+        private EHashAlgorithm _encryptType = EHashAlgorithm.SHA256;
         private string _url;
         private string _merchantId;
-        private string _hashKey;
-        private string _hashIV;
         private string _serverUrl;
         private string _clientUrl;
         private string _clientUrlWithExtraPaidInfo;
+        private string _hashKey;
+        private string _hashIV;
         private IPayment _payment;
         private CheckMac _checkMac;
+        private string _storeId;
+        private bool _isPlatform;
         #endregion
 
         #region Public Propreties
@@ -41,7 +39,9 @@ namespace FluentEcpay.Configurations
                 id => _merchantId = id,
                 key => _hashKey = key,
                 iv => _hashIV = iv,
-                type => _encryptType = type
+                type => _encryptType = type,
+                id => _storeId = id,
+                isPlatform => _isPlatform = isPlatform
             );
             Return = new PaymentReturnConfiguration(
                 this,
@@ -59,41 +59,54 @@ namespace FluentEcpay.Configurations
 
         public IPayment Generate()
         {
-            ValidatePayment();
+            if (_payment is null)
+                throw new ArgumentNullException(nameof(_payment), "Transaction.New must be set.");
+            if (string.IsNullOrEmpty(_hashKey))
+                throw new ArgumentNullException(nameof(_hashKey), "Send.UsingHash(key:) must be set.");
+            if (string.IsNullOrEmpty(_hashIV))
+                throw new ArgumentNullException(nameof(_hashIV), "Send.UsingHash(iv:) must be set.");
+
+            // TODO: InvoiceMark, Language
 
             _payment.URL = _url;
             _payment.MerchantID = _merchantId;
+            _payment.PaymentType = _paymentType;
             _payment.ReturnURL = _serverUrl;
             _payment.ClientBackURL = _clientUrl;
-            _payment.PaymentType = _paymentType;
-            _payment.EncryptType = _encryptType.Value;
-            //_payment.StoreID = 
+            _payment.EncryptType = Convert.ToInt32(_encryptType);
+            _payment.StoreID = _storeId;
             _payment.OrderResultURL = _clientUrlWithExtraPaidInfo;
             _payment.NeedExtraPaidInfo = string.IsNullOrEmpty(_clientUrlWithExtraPaidInfo) ? null : "Y";
-            _payment.DeviceSource = null;
-            //_payment.PlatformID = 
-            //_payment.InvoiceMark =
-            //_payment.Language = 
-            _payment.CheckMacValue = _checkMac.GetValue(_payment, _hashKey, _hashIV, _encryptType.Value);
+            _payment.PlatformID = _isPlatform ? _merchantId : null;
+            _payment.CheckMacValue = _checkMac.GetValue(_payment, _hashKey, _hashIV, _encryptType);
+
+            VerifyRequiredParameters(_payment);
 
             return _payment;
         }
 
-        private void ValidatePayment()
+        private void VerifyRequiredParameters(IPayment payment)
         {
-            if (!_encryptType.HasValue) throw new ArgumentNullException(nameof(_encryptType));
-            if (string.IsNullOrEmpty(_url)) throw new ArgumentNullException(nameof(_url));
-            if (string.IsNullOrEmpty(_merchantId)) throw new ArgumentNullException(nameof(_merchantId));
-            if (string.IsNullOrEmpty(_hashKey)) throw new ArgumentNullException(nameof(_hashKey));
-            if (string.IsNullOrEmpty(_hashIV)) throw new ArgumentNullException(nameof(_hashIV));
-            if (string.IsNullOrEmpty(_serverUrl)) throw new ArgumentNullException(nameof(_serverUrl));
-            if (_payment is null) throw new ArgumentNullException(nameof(_encryptType));
-            if (string.IsNullOrEmpty(_payment.MerchantTradeNo)) throw new ArgumentNullException(nameof(_payment.MerchantTradeNo));
-            if (string.IsNullOrEmpty(_payment.TradeDesc)) throw new ArgumentNullException(nameof(_payment.TradeDesc));
-            if (string.IsNullOrEmpty(_payment.MerchantTradeDate)) throw new ArgumentNullException(nameof(_payment.MerchantTradeDate));
-            if (string.IsNullOrEmpty(_payment.ChoosePayment)) throw new ArgumentNullException(nameof(_payment.ChoosePayment));
-            if (string.IsNullOrEmpty(_payment.ItemName)) throw new ArgumentNullException(nameof(_payment.ItemName));
-            if (!_payment.TotalAmount.HasValue) throw new ArgumentNullException(nameof(_payment.TotalAmount));
+            if (string.IsNullOrEmpty(payment.URL))
+                throw new ArgumentNullException(nameof(payment.URL), "Send.ToApi(url:) must be set.");
+            if (string.IsNullOrEmpty(payment.MerchantID))
+                throw new ArgumentNullException(nameof(payment.MerchantID), "Send.ToMerchant(merchantId:) must be set.");
+            if (string.IsNullOrEmpty(payment.MerchantTradeNo))
+                throw new ArgumentNullException(nameof(payment.MerchantTradeNo), "Transaction.New(no:) must be set.");
+            if (string.IsNullOrEmpty(payment.MerchantTradeDate))
+                throw new ArgumentNullException(nameof(payment.MerchantTradeDate), "Transaction.New(date:) must be set.");
+            if (!payment.TotalAmount.HasValue)
+                throw new ArgumentNullException(nameof(payment.TotalAmount), "Transaction.WithItems(itmes:) must be set.");
+            if (string.IsNullOrEmpty(payment.TradeDesc))
+                throw new ArgumentNullException(nameof(payment.TradeDesc), "Transaction.New(description:) must be set.");
+            if (string.IsNullOrEmpty(payment.ItemName))
+                throw new ArgumentNullException(nameof(payment.ItemName), "Transaction.WithItems(itmes:) must be set.");
+            if (string.IsNullOrEmpty(payment.ReturnURL))
+                throw new ArgumentNullException(nameof(payment.ReturnURL), "Return.ToServer(url:) must be set.");
+            if (string.IsNullOrEmpty(payment.ClientBackURL) && string.IsNullOrEmpty(payment.OrderResultURL))
+                throw new ArgumentNullException($"{nameof(payment.ClientBackURL)} or {nameof(payment.OrderResultURL)}", "Return.ToClient(url:) must be set.");
+            if (string.IsNullOrEmpty(payment.ChoosePayment))
+                throw new ArgumentNullException(nameof(payment.ChoosePayment), "Transaction.UseMethod(method:) must be set.");
         }
     }
 }

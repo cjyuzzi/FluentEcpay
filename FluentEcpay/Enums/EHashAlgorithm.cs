@@ -3,8 +3,9 @@ namespace FluentEcpay.Enums
     /// <summary>
     /// 雜湊加密演算法。
     /// </summary>
-    public enum HashAlgorithm
+    public enum EHashAlgorithm
     {
-        SHA256 = 1,
+        MD5,
+        SHA256
     }
 }

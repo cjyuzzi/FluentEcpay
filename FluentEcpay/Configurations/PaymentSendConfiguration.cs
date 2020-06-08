@@ -6,20 +6,28 @@ namespace FluentEcpay.Configurations
 {
     public class PaymentSendConfiguration : IPaymentSendConfiguration
     {
+
+        #region Private Fields
         private readonly PaymentConfiguration _configuration;
         private readonly Action<string> _setUrl;
         private readonly Action<string> _setMerchantId;
         private readonly Action<string> _setHashKey;
         private readonly Action<string> _setHashIV;
-        private readonly Action<int> _setEncryptType;
+        private readonly Action<EHashAlgorithm> _setEncryptType;
+        private readonly Action<string> _setStoreId;
+        private readonly Action<bool> _setIsPlatform;
+        #endregion
 
+        #region CTOR
         public PaymentSendConfiguration(
-            PaymentConfiguration configuration,
-            Action<string> setUrl,
-            Action<string> setMerchantId,
-            Action<string> setHashKey,
-            Action<string> setHashIV,
-            Action<int> setEncryptType)
+         PaymentConfiguration configuration,
+         Action<string> setUrl,
+         Action<string> setMerchantId,
+         Action<string> setHashKey,
+         Action<string> setHashIV,
+         Action<EHashAlgorithm> setEncryptType,
+         Action<string> setStoreId,
+         Action<bool> setIsPlatform)
         {
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             _setUrl = setUrl ?? throw new ArgumentNullException(nameof(setUrl));
@@ -27,7 +35,10 @@ namespace FluentEcpay.Configurations
             _setHashKey = setHashKey ?? throw new ArgumentNullException(nameof(setHashKey));
             _setHashIV = setHashIV ?? throw new ArgumentNullException(nameof(setHashIV));
             _setEncryptType = setEncryptType ?? throw new ArgumentNullException(nameof(setEncryptType));
+            _setStoreId = setStoreId ?? throw new ArgumentNullException(nameof(setStoreId));
+            _setIsPlatform = setIsPlatform ?? throw new ArgumentNullException(nameof(setIsPlatform));
         }
+        #endregion
 
         public IPaymentConfiguration ToApi(string url)
         {
@@ -36,27 +47,25 @@ namespace FluentEcpay.Configurations
             return _configuration;
         }
 
-        // TODO: StoreID, PlatformID
-        public IPaymentConfiguration ToMerchant(string merChantId, string storeId = null, bool isPlatform = false)
+        public IPaymentConfiguration ToMerchant(string merchantId, string storeId = null, bool isPlatform = false)
         {
-            if (string.IsNullOrEmpty(merChantId)) throw new ArgumentNullException(nameof(merChantId));
-            _setMerchantId(merChantId);
+            if (string.IsNullOrEmpty(merchantId)) throw new ArgumentNullException(nameof(merchantId));
+
+            _setMerchantId(merchantId);
+            if (storeId != null) _setStoreId(storeId);
+            _setIsPlatform(isPlatform);
+
             return _configuration;
         }
 
-        public IPaymentConfiguration UsingHash(string key, string iv, HashAlgorithm? algorithm = HashAlgorithm.SHA256)
+        public IPaymentConfiguration UsingHash(string key, string iv, EHashAlgorithm? algorithm = EHashAlgorithm.SHA256)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));
             if (string.IsNullOrEmpty(iv)) throw new ArgumentNullException(nameof(iv));
 
             if (algorithm.HasValue)
             {
-                switch (algorithm.Value)
-                {
-                    case HashAlgorithm.SHA256:
-                        _setEncryptType(1);
-                        break;
-                }
+                _setEncryptType(algorithm.Value);
             }
             else throw new ArgumentNullException(nameof(algorithm));
 

@@ -96,11 +96,6 @@ namespace FluentEcpay.Interfaces
         /// <value>String(1) 預設值：N</value>
         string NeedExtraPaidInfo { get; set; }
         /// <summary>
-        /// 裝置來源。請帶空值，由系統自動判定。
-        /// </summary>
-        /// <value>String(10)</value>
-        string DeviceSource { get; set; }
-        /// <summary>
         /// 隱藏付款方式。當付款方式 <c>ChoosePayment</c> 為 ALL 時，可隱藏不需要的付款方式，多筆請以井號分隔 #。
         /// </summary>
         /// <value>String(100)</value>

@@ -10,15 +10,19 @@ namespace FluentEcpay.Configurations
 {
     public class PaymentTransactionConfiguration : IPaymentTransactionConfiguration
     {
+        #region Private Fields
         private readonly PaymentConfiguration _configuration;
         private readonly Action<IPayment> _setPayment;
         private IPayment _payment;
+        #endregion
 
-        public PaymentTransactionConfiguration(PaymentConfiguration paymentConfiguration, Action<IPayment> setPayment)
+        #region CTOR
+        public PaymentTransactionConfiguration(PaymentConfiguration configuration, Action<IPayment> setPayment)
         {
-            _configuration = paymentConfiguration ?? throw new ArgumentNullException(nameof(paymentConfiguration));
+            _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             _setPayment = setPayment ?? throw new ArgumentNullException(nameof(setPayment));
         }
+        #endregion
 
         public IPaymentConfiguration New(string no, string description, DateTime? date, string remark = null)
         {
@@ -33,37 +37,37 @@ namespace FluentEcpay.Configurations
                 MerchantTradeDate = date.Value.ToString("yyyy/MM/dd HH:mm:ss")
             };
             if (remark != null)
-                _payment.Remark = HttpUtility.UrlEncode(remark);
+                _payment.Remark = remark;
 
             _setPayment(_payment);
 
             return _configuration;
         }
 
-        public IPaymentConfiguration UseMethod(PaymentMethod? method, PaymentSubMethod? sub = null, PaymentIgnoreMethod? ignore = null)
+        public IPaymentConfiguration UseMethod(EPaymentMethod? method, EPaymentSubMethod? sub = null, EPaymentIgnoreMethod? ignore = null)
         {
             if (!method.HasValue) throw new ArgumentNullException(nameof(method));
 
             switch (method.Value)
             {
-                case PaymentMethod.ALL:
-                    if (!ignore.HasValue) throw new ArgumentNullException(nameof(ignore));
-                    if (sub.HasValue) throw new ArgumentException("Sub Method is not allowed when PaymentMethod is set to ALL.", nameof(sub));
+                case EPaymentMethod.ALL:
+                    if (sub.HasValue) throw new ArgumentException("Sub method is not allowed when PaymentMethod is set to ALL.", nameof(sub));
                     _payment.ChoosePayment = method.Value.ToString();
-                    _payment.IgnorePayment = ignore.Value.ToString("F").Replace(", ", "#");
+                    if (ignore.HasValue)
+                        _payment.IgnorePayment = ignore.Value.ToString("F").Replace(", ", "#");
                     break;
-                case PaymentMethod.Union:
-                    if (sub.HasValue) throw new ArgumentException("Sub Method is not allowed when PaymentMethod is set to Union.", nameof(sub));
-                    if (ignore.HasValue) throw new ArgumentException("Ignore Method is not allowed when PaymentMethod is not set to ALL.", nameof(ignore));
-                    _payment.ChoosePayment = PaymentMethod.Credit.ToString();
+                case EPaymentMethod.Union:
+                    if (sub.HasValue) throw new ArgumentException("Sub method is not allowed when PaymentMethod is set to Union.", nameof(sub));
+                    if (ignore.HasValue) throw new ArgumentException("Ignore method is not allowed when PaymentMethod is not set to ALL.", nameof(ignore));
+                    _payment.ChoosePayment = EPaymentMethod.Credit.ToString();
                     _payment.UnionPay = 1;
                     break;
-                case PaymentMethod.ATM:
-                case PaymentMethod.CVS:
-                case PaymentMethod.BARCODE:
-                case PaymentMethod.Credit:
-                case PaymentMethod.WebATM:
-                    if (ignore.HasValue) throw new ArgumentException("Ignore Method is not allowed when PaymentMethod is not set to ALL.", nameof(ignore));
+                case EPaymentMethod.ATM:
+                case EPaymentMethod.CVS:
+                case EPaymentMethod.BARCODE:
+                case EPaymentMethod.Credit:
+                case EPaymentMethod.WebATM:
+                    if (ignore.HasValue) throw new ArgumentException("Ignore method is not allowed when PaymentMethod is not set to ALL.", nameof(ignore));
                     _payment.ChoosePayment = method.Value.ToString();
                     if (sub.HasValue) _payment.ChooseSubPayment = sub.Value.ToString();
                     break;
@@ -88,14 +92,13 @@ namespace FluentEcpay.Configurations
         {
             if (items is null || items.Count() == 0) throw new ArgumentNullException(nameof(items));
 
-            _payment.ItemName = GenerateItemName(items);
             _payment.TotalAmount = CalculateTotalAmount(items);
+            _payment.ItemName = GenerateItemName(items);
 
             return _configuration;
         }
 
-
-        #region private methods
+        #region Private Methods
         private string GenerateTradeNo(string no)
         {
             var randomLength = 20 - no.Length;
@@ -116,7 +119,7 @@ namespace FluentEcpay.Configurations
         }
         private string GenerateItemName(IEnumerable<Item> items)
         {
-            var itemNames = items.Select(i => $"{i.Name} {i.Price} 新臺幣 x {i.Quantity}").ToList();
+            var itemNames = items.Select(i => $"{i.Name} {i.Price} 新臺幣 x {i.Quantity}");
             return string.Join("#", itemNames);
         }
         #endregion
