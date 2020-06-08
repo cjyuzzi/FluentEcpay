@@ -21,6 +21,7 @@ namespace FluentEcpay.Configurations
         private string _clientUrl;
         private string _clientUrlWithExtraPaidInfo;
         private IPayment _payment;
+        private CheckMac _checkMac;
         #endregion
 
         #region Public Propreties
@@ -52,6 +53,7 @@ namespace FluentEcpay.Configurations
                 this,
                 payment => _payment = payment
             );
+            _checkMac = new CheckMac();
         }
         #endregion
 
@@ -72,56 +74,10 @@ namespace FluentEcpay.Configurations
             //_payment.PlatformID = 
             //_payment.InvoiceMark =
             //_payment.Language = 
-            _payment.CheckMacValue = GenerateCheckMacValue(_payment);
+            _payment.CheckMacValue = _checkMac.GetValue(_payment, _hashKey, _hashIV, _encryptType.Value);
 
             return _payment;
         }
-
-        private string GenerateCheckMacValue(IPayment payment)
-        {
-            string szCheckMacValue = String.Empty;
-            var dict = GeneratePaymentDictionary(payment);
-            var dictAsc = dict.OrderBy(o => o.Key).ToDictionary(o => o.Key, p => p.Value);
-            var parameters = string.Join("&", dictAsc.Select(param => $"{param.Key}={param.Value}"));
-            szCheckMacValue = String.Format("HashKey={0}&{1}&HashIV={2}", _hashKey, parameters, _hashIV);
-            szCheckMacValue = HttpUtility.UrlEncode(szCheckMacValue).ToLower();
-            if (encryptType == 1)
-            {
-                szCheckMacValue = SHA256.Create().Hash..Encrypt(szCheckMacValue);
-            }
-            else { szCheckMacValue = MD5Encoder.Encrypt(szCheckMacValue); }
-            return szCheckMacValue;
-        }
-
-        private Dictionary<string, string> GeneratePaymentDictionary(IPayment payment) => new Dictionary<string, string>(){
-                {nameof(payment.MerchantID), payment.MerchantID},
-                {nameof(payment.MerchantTradeNo), payment.MerchantTradeNo},
-                {nameof(payment.StoreID), payment.StoreID},
-                {nameof(payment.MerchantTradeDate), payment.MerchantTradeDate},
-                {nameof(payment.PaymentType), payment.PaymentType},
-                {nameof(payment.TotalAmount), payment.TotalAmount.ToString()},
-                {nameof(payment.TradeDesc), payment.TradeDesc},
-                {nameof(payment.ItemName), payment.ItemName},
-                {nameof(payment.ReturnURL), payment.ReturnURL},
-                {nameof(payment.ChoosePayment), payment.ChoosePayment},
-                {nameof(payment.ClientBackURL), payment.ClientBackURL},
-                {nameof(payment.ItemURL), payment.ItemURL},
-                {nameof(payment.Remark), payment.Remark},
-                {nameof(payment.ChooseSubPayment), payment.ChooseSubPayment},
-                {nameof(payment.OrderResultURL), payment.OrderResultURL},
-                {nameof(payment.NeedExtraPaidInfo), payment.NeedExtraPaidInfo},
-                {nameof(payment.DeviceSource), payment.DeviceSource},
-                {nameof(payment.IgnorePayment), payment.IgnorePayment},
-                {nameof(payment.PlatformID), payment.PlatformID},
-                {nameof(payment.InvoiceMark), payment.InvoiceMark},
-                {nameof(payment.CustomField1), payment.CustomField1},
-                {nameof(payment.CustomField2), payment.CustomField2},
-                {nameof(payment.CustomField3), payment.CustomField3},
-                {nameof(payment.CustomField4), payment.CustomField4},
-                {nameof(payment.EncryptType), payment.EncryptType.ToString()},
-                {nameof(payment.Language), payment.Language},
-                {nameof(payment.UnionPay), payment.UnionPay.ToString()}
-            };
 
         private void ValidatePayment()
         {

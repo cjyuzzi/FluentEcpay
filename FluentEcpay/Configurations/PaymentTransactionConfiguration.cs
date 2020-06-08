@@ -101,7 +101,7 @@ namespace FluentEcpay.Configurations
             var randomLength = 20 - no.Length;
             var random = new Random().Next(0, int.MaxValue);
 
-            return no + random.ToString().PadLeft(randomLength);
+            return no + random.ToString().PadLeft(randomLength, '0');
         }
         private int CalculateTotalAmount(IEnumerable<Item> items)
         {
