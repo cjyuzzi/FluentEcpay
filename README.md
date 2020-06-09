@@ -1,9 +1,13 @@
 # FluentEcpay
 
+###### tags: `ASP.NET Core`
+
 使用 [Fluent Interface](https://zh.wikipedia.org/wiki/%E6%B5%81%E5%BC%8F%E6%8E%A5%E5%8F%A3) 風格的設計，產生綠界金流的交易訂單。
 
-* 綠界金流文件版本：[V 5.2.3](https://www.ecpay.com.tw/Service/API_Dwnld)
-* 參考官方 SDK 設計：[.NET SDK](https://github.com/ECPay/ECpayAIO_Net)
+* 函式庫版本：.Net Standard 2.0。
+* 測試程式與範例 Web 專案版本：.NET Core 3.1。
+* 綠界金流 API 串接文件版本：[V 5.2.3](https://www.ecpay.com.tw/Service/API_Dwnld)。
+* 參考官方 SDK 設計：[.NET SDK](https://github.com/ECPay/ECpayAIO_Net)。
 
 ## 設定
 
@@ -11,7 +15,7 @@
 ```csharp=
 using FluentEcpay;
 ```
-2. 建立 `PaymentConfiguration` 並設定參數 : 
+2. 建立 `PaymentConfiguration` 並設定參數：參數請參考[官方 API 串接文件](https://www.ecpay.com.tw/Content/files/ecpay_011.pdf)。
 ```csharp=
 IPayment actual = new PaymentConfiguration()
     .Send.ToApi(
