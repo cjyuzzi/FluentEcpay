@@ -1,4 +1,4 @@
-namespace FluentEcpay.Enums
+namespace FluentEcpay
 {
     /// <summary>
     /// 雜湊加密演算法。

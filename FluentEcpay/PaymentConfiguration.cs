@@ -1,7 +1,6 @@
 using System;
 using FluentEcpay.Interfaces;
 using FluentEcpay.Configurations;
-using FluentEcpay.Enums;
 
 namespace FluentEcpay
 {
@@ -58,7 +57,7 @@ namespace FluentEcpay
         }
         #endregion
 
-        public Payment Generate()
+        public IPayment Generate()
         {
             if (_payment is null)
                 throw new ArgumentNullException(nameof(_payment), "Transaction.New() must be set.");

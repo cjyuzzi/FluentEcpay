@@ -4,7 +4,6 @@ using System.Web;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using FluentEcpay.Interfaces;
-using FluentEcpay.Enums;
 
 namespace FluentEcpay.Configurations
 {

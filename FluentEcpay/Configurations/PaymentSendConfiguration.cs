@@ -1,6 +1,5 @@
 using System;
 using FluentEcpay.Interfaces;
-using FluentEcpay.Enums;
 
 namespace FluentEcpay.Configurations
 {

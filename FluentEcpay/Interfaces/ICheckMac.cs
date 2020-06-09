@@ -1,6 +1,3 @@
-
-using FluentEcpay.Enums;
-
 namespace FluentEcpay.Interfaces
 {
     /// <summary>

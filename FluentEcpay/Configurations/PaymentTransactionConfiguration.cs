@@ -3,7 +3,6 @@ using System.Web;
 using System.Linq;
 using System.Collections.Generic;
 using FluentEcpay.Interfaces;
-using FluentEcpay.Enums;
 
 namespace FluentEcpay.Configurations
 {

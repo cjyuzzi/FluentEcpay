@@ -1,4 +1,4 @@
-namespace FluentEcpay.Interfaces
+namespace FluentEcpay
 {
     /// <summary>
     /// 訂單的商品資料。

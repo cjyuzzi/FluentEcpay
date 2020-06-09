@@ -1,4 +1,4 @@
-namespace FluentEcpay.Interfaces
+namespace FluentEcpay
 {
     /// <summary>
     /// 介接綠界金流產生訂單時所需傳入的參數資料。

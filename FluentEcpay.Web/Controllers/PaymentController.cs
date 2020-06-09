@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using FluentEcpay.Enums;
 
 namespace FluentEcpay.Web.Controllers
 {
@@ -44,7 +43,7 @@ namespace FluentEcpay.Web.Controllers
                     }
                 }
             };
-            Payment payment = new PaymentConfiguration()
+            IPayment payment = new PaymentConfiguration()
                 .Send.ToApi(
                     url: service.Url)
                 .Send.ToMerchant(
