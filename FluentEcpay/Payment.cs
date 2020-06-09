@@ -1,6 +1,6 @@
 using FluentEcpay.Interfaces;
 
-namespace FluentEcpay.Models
+namespace FluentEcpay
 {
     public class Payment : IPayment
     {

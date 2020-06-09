@@ -6,9 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 using FluentAssertions;
-using FluentEcpay.Configurations;
 using FluentEcpay.Interfaces;
-using FluentEcpay.Models;
 using FluentEcpay.Enums;
 
 namespace FluentEcpay.UnitTests

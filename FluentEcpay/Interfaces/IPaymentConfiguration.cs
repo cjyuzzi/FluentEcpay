@@ -20,6 +20,6 @@ namespace FluentEcpay.Interfaces
         /// <summary>
         /// 產生綠界訂單之物件實體。
         /// </summary>
-        IPayment Generate();
+        Payment Generate();
     }
 }

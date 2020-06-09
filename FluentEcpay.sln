@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentEcpay", "FluentEcpay\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentEcpay.Test", "FluentEcpay.Test\FluentEcpay.Test.csproj", "{8CFAE6B8-0076-4627-8217-04361CADFC3C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentEcpay.Web", "FluentEcpay.Web\FluentEcpay.Web.csproj", "{1CE80493-28C7-4797-945A-204FA8AEF32E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,5 +46,17 @@ Global
 		{8CFAE6B8-0076-4627-8217-04361CADFC3C}.Release|x64.Build.0 = Release|Any CPU
 		{8CFAE6B8-0076-4627-8217-04361CADFC3C}.Release|x86.ActiveCfg = Release|Any CPU
 		{8CFAE6B8-0076-4627-8217-04361CADFC3C}.Release|x86.Build.0 = Release|Any CPU
+		{1CE80493-28C7-4797-945A-204FA8AEF32E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CE80493-28C7-4797-945A-204FA8AEF32E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CE80493-28C7-4797-945A-204FA8AEF32E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1CE80493-28C7-4797-945A-204FA8AEF32E}.Debug|x64.Build.0 = Debug|Any CPU
+		{1CE80493-28C7-4797-945A-204FA8AEF32E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1CE80493-28C7-4797-945A-204FA8AEF32E}.Debug|x86.Build.0 = Debug|Any CPU
+		{1CE80493-28C7-4797-945A-204FA8AEF32E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CE80493-28C7-4797-945A-204FA8AEF32E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CE80493-28C7-4797-945A-204FA8AEF32E}.Release|x64.ActiveCfg = Release|Any CPU
+		{1CE80493-28C7-4797-945A-204FA8AEF32E}.Release|x64.Build.0 = Release|Any CPU
+		{1CE80493-28C7-4797-945A-204FA8AEF32E}.Release|x86.ActiveCfg = Release|Any CPU
+		{1CE80493-28C7-4797-945A-204FA8AEF32E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

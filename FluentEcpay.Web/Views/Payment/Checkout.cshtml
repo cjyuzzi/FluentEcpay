@@ -1,0 +1,81 @@
+@using FluentEcpay.Interfaces
+@model IPayment
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <form action="@Model.URL" method="post" id="payment">
+        @* Requried *@
+        <input type="hidden" asp-for="MerchantID" />
+        <input type="hidden" asp-for="MerchantTradeNo" />
+        <input type="hidden" asp-for="MerchantTradeDate" />
+        <input type="hidden" asp-for="PaymentType" />
+        <input type="hidden" asp-for="TotalAmount" />
+        <input type="hidden" asp-for="TradeDesc" />
+        <input type="hidden" asp-for="ItemName" />
+        <input type="hidden" asp-for="ReturnURL" />
+        <input type="hidden" asp-for="ChoosePayment" />
+        <input type="hidden" asp-for="CheckMacValue" />
+        <input type="hidden" asp-for="EncryptType" />
+        @* Optional *@
+        @if(!string.IsNullOrEmpty(Model.StoreID)){
+        <input type="hidden" asp-for="StoreID" />
+        }
+        @if(!string.IsNullOrEmpty(Model.ClientBackURL)){
+        <input type="hidden" asp-for="ClientBackURL" />
+        }
+        @if(!string.IsNullOrEmpty(Model.ItemURL)){
+        <input type="hidden" asp-for="ItemURL" />
+        }
+        @if(!string.IsNullOrEmpty(Model.Remark)){
+        <input type="hidden" asp-for="Remark" />
+        }
+        @if(!string.IsNullOrEmpty(Model.ChooseSubPayment)){
+        <input type="hidden" asp-for="ChooseSubPayment" />
+        }
+        @if(!string.IsNullOrEmpty(Model.OrderResultURL)){
+        <input type="hidden" asp-for="OrderResultURL" />
+        }
+        @if(!string.IsNullOrEmpty(Model.NeedExtraPaidInfo)){
+        <input type="hidden" asp-for="NeedExtraPaidInfo" />
+        }
+        @if(!string.IsNullOrEmpty(Model.IgnorePayment)){
+        <input type="hidden" asp-for="IgnorePayment" />
+        }
+        @if(!string.IsNullOrEmpty(Model.PlatformID)){
+        <input type="hidden" asp-for="PlatformID" />
+        }
+        @if(!string.IsNullOrEmpty(Model.InvoiceMark)){
+        <input type="hidden" asp-for="InvoiceMark" />
+        }
+        @if(!string.IsNullOrEmpty(Model.CustomField1)){
+        <input type="hidden" asp-for="CustomField1" />
+        }
+        @if(!string.IsNullOrEmpty(Model.CustomField2)){
+        <input type="hidden" asp-for="CustomField2" />
+        }
+        @if(!string.IsNullOrEmpty(Model.CustomField3)){
+        <input type="hidden" asp-for="CustomField3" />
+        }
+        @if(!string.IsNullOrEmpty(Model.CustomField4)){
+        <input type="hidden" asp-for="CustomField4" />
+        }
+        @if(!string.IsNullOrEmpty(Model.Language)){
+        <input type="hidden" asp-for="Language" />
+        }
+        @if(Model.UnionPay!=null){
+        <input type="hidden" asp-for="UnionPay" />
+        }
+    </form>
+    <script>
+       document.getElementById('payment').submit();
+    </script>
+</body>
+</html>

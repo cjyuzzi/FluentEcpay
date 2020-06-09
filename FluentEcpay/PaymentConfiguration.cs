@@ -1,8 +1,9 @@
 using System;
-using FluentEcpay.Enums;
 using FluentEcpay.Interfaces;
+using FluentEcpay.Configurations;
+using FluentEcpay.Enums;
 
-namespace FluentEcpay.Configurations
+namespace FluentEcpay
 {
     public class PaymentConfiguration : IPaymentConfiguration
     {
@@ -16,7 +17,7 @@ namespace FluentEcpay.Configurations
         private string _clientUrlWithExtraPaidInfo;
         private string _hashKey;
         private string _hashIV;
-        private IPayment _payment;
+        private Payment _payment;
         private CheckMac _checkMac;
         private string _storeId;
         private bool _isPlatform;
@@ -57,7 +58,7 @@ namespace FluentEcpay.Configurations
         }
         #endregion
 
-        public IPayment Generate()
+        public Payment Generate()
         {
             if (_payment is null)
                 throw new ArgumentNullException(nameof(_payment), "Transaction.New() must be set.");

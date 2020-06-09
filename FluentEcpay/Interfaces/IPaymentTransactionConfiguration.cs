@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using FluentEcpay.Enums;
-using FluentEcpay.Models;
 
 namespace FluentEcpay.Interfaces
 {
