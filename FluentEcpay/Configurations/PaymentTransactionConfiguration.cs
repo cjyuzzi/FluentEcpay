@@ -95,6 +95,8 @@ namespace FluentEcpay.Configurations
             _payment.TotalAmount = CalculateTotalAmount(items);
             _payment.ItemName = GenerateItemName(items);
 
+            if (url != null) _payment.ItemURL = url;
+
             return _configuration;
         }
 

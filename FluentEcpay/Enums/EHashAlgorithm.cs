@@ -6,6 +6,6 @@ namespace FluentEcpay.Enums
     public enum EHashAlgorithm
     {
         MD5,
-        SHA256
+        SHA256 = 1
     }
 }

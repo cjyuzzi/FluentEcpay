@@ -22,7 +22,8 @@ namespace FluentEcpay.Configurations
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             _setServerUrl = setServerUrl ?? throw new ArgumentNullException(nameof(setServerUrl));
             _setClientUrl = setClientUrl ?? throw new ArgumentNullException(nameof(setClientUrl));
-            _setClientUrlWithExtraPaidInfo = setClientUrlWithExtraPaidInfo ?? throw new ArgumentNullException(nameof(setClientUrl));
+            _setClientUrlWithExtraPaidInfo = setClientUrlWithExtraPaidInfo
+                ?? throw new ArgumentNullException(nameof(setClientUrlWithExtraPaidInfo));
         }
         #endregion
 

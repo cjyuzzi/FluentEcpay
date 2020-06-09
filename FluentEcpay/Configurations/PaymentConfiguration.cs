@@ -60,7 +60,7 @@ namespace FluentEcpay.Configurations
         public IPayment Generate()
         {
             if (_payment is null)
-                throw new ArgumentNullException(nameof(_payment), "Transaction.New must be set.");
+                throw new ArgumentNullException(nameof(_payment), "Transaction.New() must be set.");
             if (string.IsNullOrEmpty(_hashKey))
                 throw new ArgumentNullException(nameof(_hashKey), "Send.UsingHash(key:) must be set.");
             if (string.IsNullOrEmpty(_hashIV))

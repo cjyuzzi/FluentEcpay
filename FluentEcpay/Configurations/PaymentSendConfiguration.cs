@@ -20,14 +20,14 @@ namespace FluentEcpay.Configurations
 
         #region CTOR
         public PaymentSendConfiguration(
-         PaymentConfiguration configuration,
-         Action<string> setUrl,
-         Action<string> setMerchantId,
-         Action<string> setHashKey,
-         Action<string> setHashIV,
-         Action<EHashAlgorithm> setEncryptType,
-         Action<string> setStoreId,
-         Action<bool> setIsPlatform)
+            PaymentConfiguration configuration,
+            Action<string> setUrl,
+            Action<string> setMerchantId,
+            Action<string> setHashKey,
+            Action<string> setHashIV,
+            Action<EHashAlgorithm> setEncryptType,
+            Action<string> setStoreId,
+            Action<bool> setIsPlatform)
         {
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             _setUrl = setUrl ?? throw new ArgumentNullException(nameof(setUrl));
