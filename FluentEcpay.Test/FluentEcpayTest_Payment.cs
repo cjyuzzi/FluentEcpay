@@ -102,7 +102,8 @@ namespace FluentEcpay.UnitTests
                     no: transaction.No,
                     description: transaction.Description,
                     date: transaction.Date,
-                    remark: null)
+                    remark: null,
+                    isNewNo: true)
                 .Transaction.UseMethod(
                     method: transaction.Method,
                     sub: null,
