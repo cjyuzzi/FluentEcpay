@@ -44,7 +44,8 @@ IPayment actual = new PaymentConfiguration()
         ignore: null)
     .Transaction.WithItems(
         items: <Items>,
-        url: null)
+        url: null,
+        amount: null) // 可選擇指定總金額不透過商品清單計算。
     .Transaction.WithCustomFields(
         field1: null,
         field2: null,
