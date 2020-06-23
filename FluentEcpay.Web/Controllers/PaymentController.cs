@@ -12,6 +12,14 @@ namespace FluentEcpay.Web.Controllers
         {
         }
 
+        // POST api/payment
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult New()
+        {
+            return RedirectToAction("checkout");
+        }
+
         [HttpGet("checkout")]
         public IActionResult CheckOut()
         {
@@ -68,18 +76,20 @@ namespace FluentEcpay.Web.Controllers
             return View(payment);
         }
 
-        // POST api/payment
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult New()
-        {
-            return RedirectToAction("checkout");
-        }
-
         [HttpPost("callback")]
-        public void Callback(string value)
+        public IActionResult Callback(IResult result)
         {
+            // 務必判斷檢查碼是否正確。
+            if (!CheckMacValueIsValid(result.CheckMacValue)) return BadRequest();
 
+            // 處理後續訂單狀態的更動等等...。
+
+            return Ok("1|OK");
+        }
+        private bool CheckMacValueIsValid(string value)
+        {
+            // TODO
+            return true;
         }
     }
 }
