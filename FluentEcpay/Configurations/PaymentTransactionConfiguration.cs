@@ -86,11 +86,11 @@ namespace FluentEcpay.Configurations
             return _configuration;
         }
 
-        public IPaymentConfiguration WithItems(IEnumerable<Item> items, string url = null)
+        public IPaymentConfiguration WithItems(IEnumerable<IItem> items, string url = null, int? amount = null)
         {
             if (items is null || items.Count() == 0) throw new ArgumentNullException(nameof(items));
 
-            _payment.TotalAmount = CalculateTotalAmount(items);
+            _payment.TotalAmount = amount.HasValue ? amount : CalculateTotalAmount(items);
             _payment.ItemName = GenerateItemName(items);
 
             if (url != null) _payment.ItemURL = url;
@@ -106,7 +106,7 @@ namespace FluentEcpay.Configurations
 
             return no + random.ToString().PadLeft(randomLength, '0');
         }
-        private int CalculateTotalAmount(IEnumerable<Item> items)
+        private int CalculateTotalAmount(IEnumerable<IItem> items)
         {
             var amount = 0;
 
@@ -117,7 +117,7 @@ namespace FluentEcpay.Configurations
 
             return amount;
         }
-        private string GenerateItemName(IEnumerable<Item> items)
+        private string GenerateItemName(IEnumerable<IItem> items)
         {
             var itemNames = items.Select(i => $"{i.Name} {i.Price} 新臺幣 x {i.Quantity}");
             return string.Join("#", itemNames);

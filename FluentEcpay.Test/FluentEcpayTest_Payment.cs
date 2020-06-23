@@ -109,7 +109,8 @@ namespace FluentEcpay.UnitTests
                     ignore: null)
                 .Transaction.WithItems(
                     items: transaction.Items,
-                    url: null)
+                    url: null,
+                    amount: null)
                 .Transaction.WithCustomFields(
                     field1: null,
                     field2: null,

@@ -19,7 +19,7 @@ namespace FluentEcpay.Interfaces
         /// <summary>
         /// 設定綠界交易訂單的商品項目。
         /// </summary>
-        IPaymentConfiguration WithItems(IEnumerable<Item> items, string url = null);
+        IPaymentConfiguration WithItems(IEnumerable<IItem> items, string url = null, int? amount = null);
         /// <summary>
         /// 提供合作廠商使用記錄用客製化使用欄位。
         /// </summary>
