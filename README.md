@@ -57,4 +57,5 @@ IPayment actual = new PaymentConfiguration()
 ```csharp=
  return View(payment);
 ```
+> 使用舊的 Razor 語法請參考~/Views/Payment/Checkout_Old.cshtml。
 4. 將訂單資料傳送到 View 之後，將會自動轉址到綠界金流支付平台。
