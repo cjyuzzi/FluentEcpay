@@ -11,7 +11,7 @@ namespace FluentEcpay.Interfaces
         /// <summary>
         /// 建立新的綠界交易訂單，需要傳入訂單編號、描述以及日期。
         /// </summary>
-        IPaymentConfiguration New(string no, string description, DateTime? date, string remark = null);
+        IPaymentConfiguration New(string no, string description, DateTime? date, string remark = null, bool isNewNo = true);
         /// <summary>
         /// 指定綠界訂單交易所使用的付款方式。
         /// </summary>

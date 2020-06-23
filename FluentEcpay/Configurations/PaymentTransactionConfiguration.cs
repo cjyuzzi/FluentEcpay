@@ -23,7 +23,7 @@ namespace FluentEcpay.Configurations
         }
         #endregion
 
-        public IPaymentConfiguration New(string no, string description, DateTime? date, string remark = null)
+        public IPaymentConfiguration New(string no, string description, DateTime? date, string remark = null, bool isNewNo = true)
         {
             if (string.IsNullOrEmpty(no)) throw new ArgumentNullException(nameof(no));
             if (string.IsNullOrEmpty(description)) throw new ArgumentNullException(nameof(description));
@@ -31,7 +31,7 @@ namespace FluentEcpay.Configurations
 
             _payment = new Payment
             {
-                MerchantTradeNo = GenerateTradeNo(no),
+                MerchantTradeNo = isNewNo ? GenerateTradeNo(no) : no,
                 TradeDesc = HttpUtility.UrlEncode(description),
                 MerchantTradeDate = date.Value.ToString("yyyy/MM/dd HH:mm:ss")
             };
