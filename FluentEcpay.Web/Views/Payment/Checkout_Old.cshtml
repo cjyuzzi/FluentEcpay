@@ -1,0 +1,97 @@
+@using FluentEcpay
+@model IPayment
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <form action="@Model.URL" method="post" id="payment">
+        @* Requried *@
+        @Html.HiddenFor(p => p.MerchantID)
+        @Html.HiddenFor(p => p.MerchantTradeNo)
+        @Html.HiddenFor(p => p.MerchantTradeDate)
+        @Html.HiddenFor(p => p.PaymentType)
+        @Html.HiddenFor(p => p.TotalAmount)
+        @Html.HiddenFor(p => p.TradeDesc)
+        @Html.HiddenFor(p => p.ItemName)
+        @Html.HiddenFor(p => p.ReturnURL)
+        @Html.HiddenFor(p => p.ChoosePayment)
+        @Html.HiddenFor(p => p.CheckMacValue)
+        @Html.HiddenFor(p => p.EncryptType)
+        @* Optional *@
+        @if (!string.IsNullOrEmpty(Model.StoreID))
+        {
+            @Html.HiddenFor(p => p.StoreID)
+        }
+        @if (!string.IsNullOrEmpty(Model.ClientBackURL))
+        {
+            @Html.HiddenFor(p => p.ClientBackURL)
+        }
+        @if (!string.IsNullOrEmpty(Model.ItemURL))
+        {
+            @Html.HiddenFor(p => p.ItemURL)
+        }
+        @if (!string.IsNullOrEmpty(Model.Remark))
+        {
+            @Html.HiddenFor(p => p.Remark)
+        }
+        @if (!string.IsNullOrEmpty(Model.ChooseSubPayment))
+        {
+            @Html.HiddenFor(p => p.ChooseSubPayment)
+        }
+        @if (!string.IsNullOrEmpty(Model.OrderResultURL))
+        {
+            @Html.HiddenFor(p => p.OrderResultURL)
+        }
+        @if (!string.IsNullOrEmpty(Model.NeedExtraPaidInfo))
+        {
+            @Html.HiddenFor(p => p.NeedExtraPaidInfo)
+        }
+        @if (!string.IsNullOrEmpty(Model.IgnorePayment))
+        {
+            @Html.HiddenFor(p => p.IgnorePayment)
+        }
+        @if (!string.IsNullOrEmpty(Model.PlatformID))
+        {
+            @Html.HiddenFor(p => p.PlatformID)
+        }
+        @if (!string.IsNullOrEmpty(Model.InvoiceMark))
+        {
+            @Html.HiddenFor(p => p.InvoiceMark)
+        }
+        @if (!string.IsNullOrEmpty(Model.CustomField1))
+        {
+            @Html.HiddenFor(p => p.CustomField1)
+        }
+        @if (!string.IsNullOrEmpty(Model.CustomField2))
+        {
+            @Html.HiddenFor(p => p.CustomField2)
+        }
+        @if (!string.IsNullOrEmpty(Model.CustomField3))
+        {
+            @Html.HiddenFor(p => p.CustomField3)
+        }
+        @if (!string.IsNullOrEmpty(Model.CustomField4))
+        {
+            @Html.HiddenFor(p => p.CustomField4)
+        }
+        @if (!string.IsNullOrEmpty(Model.Language))
+        {
+            @Html.HiddenFor(p => p.Language)
+        }
+        @if (Model.UnionPay.HasValue)
+        {
+            @Html.HiddenFor(p => p.UnionPay)
+        }
+    </form>
+    <script>
+       document.getElementById('payment').submit();
+    </script>
+</body>
+</html>

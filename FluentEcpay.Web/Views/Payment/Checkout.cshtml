@@ -70,7 +70,7 @@
         @if(!string.IsNullOrEmpty(Model.Language)){
         <input type="hidden" asp-for="Language" />
         }
-        @if(Model.UnionPay!=null){
+        @if(Model.UnionPay.HasValue){
         <input type="hidden" asp-for="UnionPay" />
         }
     </form>
