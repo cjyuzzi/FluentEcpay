@@ -12,6 +12,7 @@ namespace FluentEcpay.Configurations
         private readonly PaymentConfiguration _configuration;
         private readonly Action<Payment> _setPayment;
         private Payment _payment;
+        private Random random = new Random();
         #endregion
 
         #region CTOR
@@ -102,9 +103,13 @@ namespace FluentEcpay.Configurations
         private string GenerateTradeNo(string no)
         {
             var randomLength = 20 - no.Length;
-            var random = new Random().Next(0, int.MaxValue);
-
-            return no + random.ToString().PadLeft(randomLength, '0');
+            return no + GenerateRandomNo(randomLength);
+        }
+        private string GenerateRandomNo(int length)
+        {
+            const string chars = "0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
         }
         private int CalculateTotalAmount(IEnumerable<IItem> items)
         {

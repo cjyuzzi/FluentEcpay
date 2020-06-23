@@ -28,7 +28,7 @@ namespace FluentEcpay.UnitTests
             };
             var transaction = new
             {
-                No = "tsem00001",
+                No = "T1110623050003",
                 Description = "急診醫學會購物系統",
                 Date = now,
                 Method = EPaymentMethod.Credit,
