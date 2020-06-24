@@ -77,7 +77,7 @@ namespace FluentEcpay.Web.Controllers
         }
 
         [HttpPost("callback")]
-        public IActionResult Callback(IResult result)
+        public IActionResult Callback(PaymentResult result)
         {
             // 務必判斷檢查碼是否正確。
             if (!CheckMacValueIsValid(result.CheckMacValue)) return BadRequest();

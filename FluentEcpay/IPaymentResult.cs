@@ -3,7 +3,7 @@ namespace FluentEcpay
     /// <summary>
     /// 完成綠界金流付款回傳的結果通知之參數資料。
     /// </summary>
-    public interface IResult
+    public interface IPaymentResult
     {
         /// <summary>
         /// 特店編號。

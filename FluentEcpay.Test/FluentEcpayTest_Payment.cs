@@ -23,13 +23,13 @@ namespace FluentEcpay.UnitTests
                 MerchantId = "2000132",
                 HashKey = "5294y06JbISpM5x9",
                 HashIV = "v77hoKGq4kWxNNIS",
-                ServerUrl = "https://tsem.com/api/payment/callback",
-                ClientUrl = "https://tsem.com/payment/success"
+                ServerUrl = "https://mysite.com/api/payment/callback",
+                ClientUrl = "https://mysite.com/payment/success"
             };
             var transaction = new
             {
                 No = "T1110623050003",
-                Description = "急診醫學會購物系統",
+                Description = "購物系統",
                 Date = now,
                 Method = EPaymentMethod.Credit,
                 Items = new List<Item>{
@@ -54,10 +54,10 @@ namespace FluentEcpay.UnitTests
                 MerchantTradeDate = now.ToString("yyyy/MM/dd HH:mm:ss"),
                 PaymentType = "aio",
                 TotalAmount = 100,
-                TradeDesc = "%e6%80%a5%e8%a8%ba%e9%86%ab%e5%ad%b8%e6%9c%83%e8%b3%bc%e7%89%a9%e7%b3%bb%e7%b5%b1",
+                TradeDesc = "%e8%b3%bc%e7%89%a9%e7%b3%bb%e7%b5%b1",
                 ItemName = "手機 20 新臺幣 x 2#隨身碟 60 新臺幣 x 1",
-                ReturnURL = "https://tsem.com/api/payment/callback",
-                ClientBackURL = "https://tsem.com/payment/success",
+                ReturnURL = "https://mysite.com/api/payment/callback",
+                ClientBackURL = "https://mysite.com/payment/success",
                 ChoosePayment = "Credit",
                 CheckMacValue = string.Empty,// dynamic
                 EncryptType = 1,
@@ -141,13 +141,13 @@ namespace FluentEcpay.UnitTests
                 MerchantId = "2000132",
                 HashKey = "5294y06JbISpM5x9",
                 HashIV = "v77hoKGq4kWxNNIS",
-                ServerUrl = "https://tsem.com/api/payment/callback",
-                ClientUrl = "https://tsem.com/payment/success"
+                ServerUrl = "https://mysite.com/api/payment/callback",
+                ClientUrl = "https://mysite.com/payment/success"
             };
             var transaction = new
             {
-                No = "tsem00002",
-                Description = "急診醫學會購物系統",
+                No = "mysite00002",
+                Description = "購物系統",
                 Date = DateTime.Now,
                 Method = EPaymentMethod.Credit,
                 Items = new List<Item>{
