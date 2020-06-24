@@ -11,7 +11,7 @@ namespace FluentEcpay
         public int TradeAmt { get; set; }
         public string PaymentDate { get; set; }
         public string PaymentType { get; set; }
-        public string PaymentTypeChargeFee { get; set; }
+        public int PaymentTypeChargeFee { get; set; }
         public string TradeDate { get; set; }
         public int SimulatePaid { get; set; }
         public string CustomField1 { get; set; }

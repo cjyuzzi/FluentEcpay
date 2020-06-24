@@ -54,7 +54,7 @@ namespace FluentEcpay
         /// 通路費。
         /// </summary>
         /// <value>Int</value>
-        string PaymentTypeChargeFee { get; set; }
+        int PaymentTypeChargeFee { get; set; }
         /// <summary>
         /// 訂單成立時間。格式為：yyyy/MM/dd HH:mm:ss。
         /// </summary>

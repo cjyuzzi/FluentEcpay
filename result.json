@@ -1,19 +1,19 @@
 {
     "MerchantID": "2000132",
-    "MerchantTradeNo": "11106240000031132858",
+    "MerchantTradeNo": "11106240000031486455",
     "StoreID": null,
     "RtnCode": 1,
     "RtnMsg": "付款成功",
-    "TradeNo": "2006241129153987",
+    "TradeNo": "2006241639564750",
     "TradeAmt": 3000,
-    "PaymentDate": "2020/06/24 12:28:18",
+    "PaymentDate": "2020/06/24 17:41:28",
     "PaymentType": "Credit_CreditCard",
     "PaymentTypeChargeFee": "0",
-    "TradeDate": "2020/06/24 11:29:15",
+    "TradeDate": "2020/06/24 16:39:56",
     "SimulatePaid": 1,
     "CustomField1": null,
     "CustomField2": null,
     "CustomField3": null,
     "CustomField4": null,
-    "CheckMacValue": "C7BD18EC5B0171040522AF2DCA1354B852EE56DBDFD47B86E4567FB3C58CF804"
+    "CheckMacValue": "BC36F73CB5BEC3ECB36BD88A3E8344B41338745BD62C5A7DA3F53F30401568E9"
 }

@@ -14,10 +14,8 @@ namespace FluentEcpay
         private string _serverUrl;
         private string _clientUrl;
         private string _clientUrlWithExtraPaidInfo;
-        private string _hashKey;
-        private string _hashIV;
-        private Payment _payment;
-        private CheckMac _checkMac;
+        private IPayment _payment;
+        private ICheckMac _checkMac;
         private string _storeId;
         private bool _isPlatform;
         #endregion
@@ -37,8 +35,7 @@ namespace FluentEcpay
                 this,
                 url => _url = url,
                 id => _merchantId = id,
-                key => _hashKey = key,
-                iv => _hashIV = iv,
+                checkMac => _checkMac = checkMac,
                 type => _encryptType = type,
                 id => _storeId = id,
                 isPlatform => _isPlatform = isPlatform
@@ -53,7 +50,6 @@ namespace FluentEcpay
                 this,
                 payment => _payment = payment
             );
-            _checkMac = new CheckMac();
         }
         #endregion
 
@@ -61,10 +57,8 @@ namespace FluentEcpay
         {
             if (_payment is null)
                 throw new ArgumentNullException(nameof(_payment), "Transaction.New() must be set.");
-            if (string.IsNullOrEmpty(_hashKey))
-                throw new ArgumentNullException(nameof(_hashKey), "Send.UsingHash(key:) must be set.");
-            if (string.IsNullOrEmpty(_hashIV))
-                throw new ArgumentNullException(nameof(_hashIV), "Send.UsingHash(iv:) must be set.");
+            if (_checkMac is null)
+                throw new ArgumentNullException(nameof(_checkMac), "Send.UsingHash() must be set.");
 
             // TODO: InvoiceMark, Language
 
@@ -78,7 +72,7 @@ namespace FluentEcpay
             _payment.OrderResultURL = _clientUrlWithExtraPaidInfo;
             _payment.NeedExtraPaidInfo = string.IsNullOrEmpty(_clientUrlWithExtraPaidInfo) ? null : "Y";
             _payment.PlatformID = _isPlatform ? _merchantId : null;
-            _payment.CheckMacValue = _checkMac.GetValue(_payment, _hashKey, _hashIV, _encryptType);
+            _payment.CheckMacValue = _checkMac.GetValue(_payment, _encryptType);
 
             VerifyRequiredParameters(_payment);
 
