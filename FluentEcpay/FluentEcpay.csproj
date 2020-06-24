@@ -1,6 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
-        <Version>1.1.2</Version>
+        <Version>1.1.3</Version>
+        <Authors>Jerry Chen</Authors>
+        <PackageDescription>使用 Fluent Interface 風格的設計，產生綠界金流的交易訂單，設定起來簡單、直覺又方便。</PackageDescription>
+        <RepositoryUrl>https://github.com/cjyuzzi/FluentEcpay</RepositoryUrl>
+        <PackageIconUrl>https://image.flaticon.com/icons/png/512/925/925661.png</PackageIconUrl>
     </PropertyGroup>
 </Project>
