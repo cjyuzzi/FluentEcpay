@@ -63,8 +63,8 @@ namespace FluentEcpay
         /// <summary>
         /// 是否為模擬付款。回傳值：若為 1 時，代表此交易為模擬付款，請勿出貨。若為 0 時，代表此交易非模擬付款。
         /// </summary>
-        /// <value>Boolean</value>
-        bool SimulatePaid { get; set; }
+        /// <value>Int</value>
+        int SimulatePaid { get; set; }
         /// <summary>
         /// 自訂名稱欄位 1。提供合作廠商使用記錄用客製化使用欄位。
         /// </summary>

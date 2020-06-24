@@ -13,7 +13,7 @@ namespace FluentEcpay
         public string PaymentType { get; set; }
         public string PaymentTypeChargeFee { get; set; }
         public string TradeDate { get; set; }
-        public bool SimulatePaid { get; set; }
+        public int SimulatePaid { get; set; }
         public string CustomField1 { get; set; }
         public string CustomField2 { get; set; }
         public string CustomField3 { get; set; }
