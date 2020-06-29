@@ -79,6 +79,14 @@ public IActionResult Callback(PaymentResult result)
 }
 ```
 
+### 獲得 PaymentResult 的 CheckMacValue
+
+此套件提供了 CheckMac 物件可以傳入 `IPaymentResult` 物件即可計算出檢查碼（實驗中），用來判斷檢查碼是否正確。
+
+```csharp=
+var checkMacValue = CheckMac.GetValue(paymentResult, hashKey, hashIV);
+```
+
 ## 協助
 
 此套件為 OpenSource 開源套件，有在串接綠界金流並且對此套件有興趣的朋友歡迎開 Issue 或是發送 PR，希望能藉由社群的力量，一起讓這個套件更強大！目前僅擁有最最最基礎的功能：產生訂單、送出訂單。
