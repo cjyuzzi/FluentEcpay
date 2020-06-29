@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -9,23 +10,50 @@ namespace FluentEcpay
 {
     public class CheckMac : ICheckMac
     {
+        #region Fields
         private readonly string _hashKey;
         private readonly string _hashIV;
+        #endregion
+        #region CTOR
         public CheckMac(string hashKey, string hashIV)
         {
-            _hashKey = hashKey ?? throw new System.ArgumentNullException(nameof(hashKey));
-            _hashIV = hashIV ?? throw new System.ArgumentNullException(nameof(hashIV));
+            _hashKey = hashKey ?? throw new ArgumentNullException(nameof(hashKey));
+            _hashIV = hashIV ?? throw new ArgumentNullException(nameof(hashIV));
         }
+        #endregion
+        #region Public methods
         public string GetValue(IPayment payment, EHashAlgorithm encryptType = EHashAlgorithm.SHA256)
         {
-            var parameters = GeneratePaymentDictionary(payment);
+            if (payment is null) throw new ArgumentNullException(nameof(payment));
+            var properties = typeof(IPayment).GetProperties();
+            var parameters = properties
+                .Where(property => property.Name != "URL")
+                .Where(property => property.GetValue(payment) != null)
+                .ToDictionary(property => property.Name, property => property.GetValue(payment).ToString());
             return GetValue(parameters, _hashKey, _hashIV, encryptType);
+        }
+        public static bool PaymentResultIsValid(PaymentResult result, string hashKey, string hashIV, EHashAlgorithm encryptType = EHashAlgorithm.SHA256)
+        {
+            if (result is null) throw new ArgumentNullException(nameof(result));
+            if (result.CheckMacValue is null) throw new ArgumentNullException(nameof(result.CheckMacValue));
+            if (string.IsNullOrEmpty(hashKey)) throw new ArgumentNullException(nameof(result));
+            if (string.IsNullOrEmpty(hashIV)) throw new ArgumentNullException(nameof(result));
+
+            var properties = typeof(IPaymentResult).GetProperties();
+            var parameters = properties
+                .Where(property => property.Name != nameof(PaymentResult.CheckMacValue))
+                .ToDictionary(property => property.Name, property =>
+                {
+                    var value = property.GetValue(result);
+                    return value is null ? string.Empty : value.ToString();
+                });
+            var toCheck = CheckMac.GetValue(parameters, hashKey, hashIV, encryptType);
+            return toCheck == result.CheckMacValue;
         }
         public static string GetValue(IDictionary<string, string> parameters, string key, string iv, EHashAlgorithm encryptType = EHashAlgorithm.SHA256)
         {
             string checkMacValue = string.Empty;
             var sortedParameters = parameters
-                .Where(o => !string.IsNullOrEmpty(o.Value))
                 .OrderBy(o => o.Key)
                 .Select(param => $"{param.Key}={param.Value}");
             var parameterString = string.Join("&", sortedParameters);
@@ -42,15 +70,8 @@ namespace FluentEcpay
             }
             return checkMacValue.ToUpper();
         }
-        public static string GetValue(IPaymentResult result, string key, string iv, EHashAlgorithm encryptType = EHashAlgorithm.SHA256)
-        {
-            var properties = typeof(IPaymentResult).GetProperties();
-            var parameters = properties
-                .Where(property => property.Name != nameof(PaymentResult.CheckMacValue))
-                .Where(property => property.GetValue(result) != null)
-                .ToDictionary(property => property.Name, property => property.GetValue(result).ToString());
-            return CheckMac.GetValue(parameters, key, iv, encryptType);
-        }
+        #endregion
+        #region Private methods
         private static string SHA256ComputeHash(string toHash)
         {
             var sb = new StringBuilder();
@@ -79,7 +100,6 @@ namespace FluentEcpay
             }
             return sb.ToString();
         }
-        private IDictionary<string, string> GeneratePaymentDictionary(IPayment payment) => new Dictionary<string, string>() { { nameof (payment.MerchantID), payment.MerchantID }, { nameof (payment.MerchantTradeNo), payment.MerchantTradeNo }, { nameof (payment.MerchantTradeDate), payment.MerchantTradeDate }, { nameof (payment.PaymentType), payment.PaymentType }, { nameof (payment.TotalAmount), payment.TotalAmount.ToString () }, { nameof (payment.TradeDesc), payment.TradeDesc }, { nameof (payment.ItemName), payment.ItemName }, { nameof (payment.ReturnURL), payment.ReturnURL }, { nameof (payment.ClientBackURL), payment.ClientBackURL }, { nameof (payment.ChoosePayment), payment.ChoosePayment }, { nameof (payment.EncryptType), payment.EncryptType.ToString () }, { nameof (payment.StoreID), payment.StoreID }, { nameof (payment.ItemURL), payment.ItemURL }, { nameof (payment.Remark), payment.Remark }, { nameof (payment.ChooseSubPayment), payment.ChooseSubPayment }, { nameof (payment.OrderResultURL), payment.OrderResultURL }, { nameof (payment.NeedExtraPaidInfo), payment.NeedExtraPaidInfo }, { nameof (payment.IgnorePayment), payment.IgnorePayment }, { nameof (payment.PlatformID), payment.PlatformID }, { nameof (payment.InvoiceMark), payment.InvoiceMark }, { nameof (payment.CustomField1), payment.CustomField1 }, { nameof (payment.CustomField2), payment.CustomField2 }, { nameof (payment.CustomField3), payment.CustomField3 }, { nameof (payment.CustomField4), payment.CustomField4 }, { nameof (payment.Language), payment.Language }, { nameof (payment.UnionPay), payment.UnionPay.ToString () }
-        };
+        #endregion
     }
 }

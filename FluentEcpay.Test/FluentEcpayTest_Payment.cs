@@ -214,35 +214,32 @@ namespace FluentEcpay.UnitTests
         public void ValidateCheckMacValue_InputDictionary_ReturnSameMacValue()
         {
             // Arrange
-            var result = new PaymentResult();
-            // {
-            //     MerchantID = "2000132",
-            //     MerchantTradeNo = "11106240000031486455",
-            //     StoreID = null,
-            //     RtnCode = 1,
-            //     RtnMsg = "付款成功",
-            //     TradeNo = "2006241639564750",
-            //     TradeAmt = 3000,
-            //     PaymentDate = "2020/06/24 16:44:55",
-            //     PaymentType = "Credit_CreditCard",
-            //     PaymentTypeChargeFee = 60,
-            //     TradeDate = "2020/06/24 16:39:56",
-            //     SimulatePaid = 1,
-            //     CustomField1 = null,
-            //     CustomField2 = null,
-            //     CustomField3 = null,
-            //     CustomField4 = null,
-            //     CheckMacValue = "54F41E87F00572B2A6B324468B810DC39B0D84E7DF378ACDB9FFF0BC7A3B333E"
-            // };
+            var result = new PaymentResult()
+            {
+                MerchantID = "2000132",
+                MerchantTradeNo = "11106240000033084023",
+                StoreID = null,
+                RtnCode = 1,
+                RtnMsg = "交易成功",
+                TradeNo = "2006291634327513",
+                TradeAmt = 3000,
+                PaymentDate = "2020/06/29 16:35:49",
+                PaymentType = "Credit_CreditCard",
+                PaymentTypeChargeFee = 60,
+                TradeDate = "2020/06/29 16:34:32",
+                SimulatePaid = 0,
+                CustomField1 = null,
+                CustomField2 = null,
+                CustomField3 = null,
+                CustomField4 = null,
+                CheckMacValue = "45FA5D47A8379FF149159A014C6445F886CC9656CF85D5B2F736577894A745F8"
+            };
             var hashKey = "5294y06JbISpM5x9";
             var hashIV = "v77hoKGq4kWxNNIS";
-            var expected = string.Empty;
             // Act
-            var actual = CheckMac.GetValue(result, hashKey, hashIV);
+            bool isValid = CheckMac.PaymentResultIsValid(result, hashKey, hashIV);
             // Assert
-            actual.Should().NotBeNullOrEmpty();
-            // TODO: Check MacValue
-            // actual.Should().BeEquivalentTo(expected);
+            isValid.Should().Be(true);
         }
     }
 }

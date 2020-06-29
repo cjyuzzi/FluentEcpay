@@ -79,17 +79,15 @@ namespace FluentEcpay.Web.Controllers
         [HttpPost("callback")]
         public IActionResult Callback(PaymentResult result)
         {
+            var hashKey = "5294y06JbISpM5x9";
+            var hashIV = "v77hoKGq4kWxNNIS";
+            
             // 務必判斷檢查碼是否正確。
-            if (!CheckMacValueIsValid(result.CheckMacValue)) return BadRequest();
+            if (!CheckMac.PaymentResultIsValid(result, hashKey, hashIV)) return BadRequest();
 
             // 處理後續訂單狀態的更動等等...。
 
             return Ok("1|OK");
-        }
-        private bool CheckMacValueIsValid(string value)
-        {
-            // TODO
-            return true;
         }
     }
 }
