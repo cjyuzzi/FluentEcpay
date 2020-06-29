@@ -10,13 +10,13 @@ namespace FluentEcpay.Configurations
     {
         #region Private Fields
         private readonly PaymentConfiguration _configuration;
-        private readonly Action<Payment> _setPayment;
-        private Payment _payment;
+        private readonly Action<IPayment> _setPayment;
+        private IPayment _payment;
         private Random random = new Random();
         #endregion
 
         #region CTOR
-        public PaymentTransactionConfiguration(PaymentConfiguration configuration, Action<Payment> setPayment)
+        public PaymentTransactionConfiguration(PaymentConfiguration configuration, Action<IPayment> setPayment)
         {
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             _setPayment = setPayment ?? throw new ArgumentNullException(nameof(setPayment));

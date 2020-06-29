@@ -209,5 +209,40 @@ namespace FluentEcpay.UnitTests
             html.Should().NotContainAny("交易失敗！ START", "常見失敗原因如下", "Transaction failed");
             #endregion
         }
+
+        [Fact]
+        public void ValidateCheckMacValue_InputDictionary_ReturnSameMacValue()
+        {
+            // Arrange
+            var result = new PaymentResult();
+            // {
+            //     MerchantID = "2000132",
+            //     MerchantTradeNo = "11106240000031486455",
+            //     StoreID = null,
+            //     RtnCode = 1,
+            //     RtnMsg = "付款成功",
+            //     TradeNo = "2006241639564750",
+            //     TradeAmt = 3000,
+            //     PaymentDate = "2020/06/24 16:44:55",
+            //     PaymentType = "Credit_CreditCard",
+            //     PaymentTypeChargeFee = 60,
+            //     TradeDate = "2020/06/24 16:39:56",
+            //     SimulatePaid = 1,
+            //     CustomField1 = null,
+            //     CustomField2 = null,
+            //     CustomField3 = null,
+            //     CustomField4 = null,
+            //     CheckMacValue = "54F41E87F00572B2A6B324468B810DC39B0D84E7DF378ACDB9FFF0BC7A3B333E"
+            // };
+            var hashKey = "5294y06JbISpM5x9";
+            var hashIV = "v77hoKGq4kWxNNIS";
+            var expected = string.Empty;
+            // Act
+            var actual = CheckMac.GetValue(result, hashKey, hashIV);
+            // Assert
+            actual.Should().NotBeNullOrEmpty();
+            // TODO: Check MacValue
+            // actual.Should().BeEquivalentTo(expected);
+        }
     }
 }

@@ -10,8 +10,7 @@ namespace FluentEcpay.Configurations
         private readonly PaymentConfiguration _configuration;
         private readonly Action<string> _setUrl;
         private readonly Action<string> _setMerchantId;
-        private readonly Action<string> _setHashKey;
-        private readonly Action<string> _setHashIV;
+        private readonly Action<ICheckMac> _setCheckMac;
         private readonly Action<EHashAlgorithm> _setEncryptType;
         private readonly Action<string> _setStoreId;
         private readonly Action<bool> _setIsPlatform;
@@ -22,8 +21,7 @@ namespace FluentEcpay.Configurations
             PaymentConfiguration configuration,
             Action<string> setUrl,
             Action<string> setMerchantId,
-            Action<string> setHashKey,
-            Action<string> setHashIV,
+            Action<ICheckMac> setCheckMac,
             Action<EHashAlgorithm> setEncryptType,
             Action<string> setStoreId,
             Action<bool> setIsPlatform)
@@ -31,8 +29,7 @@ namespace FluentEcpay.Configurations
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             _setUrl = setUrl ?? throw new ArgumentNullException(nameof(setUrl));
             _setMerchantId = setMerchantId ?? throw new ArgumentNullException(nameof(setMerchantId));
-            _setHashKey = setHashKey ?? throw new ArgumentNullException(nameof(setHashKey));
-            _setHashIV = setHashIV ?? throw new ArgumentNullException(nameof(setHashIV));
+            _setCheckMac = setCheckMac ?? throw new ArgumentNullException(nameof(setCheckMac));
             _setEncryptType = setEncryptType ?? throw new ArgumentNullException(nameof(setEncryptType));
             _setStoreId = setStoreId ?? throw new ArgumentNullException(nameof(setStoreId));
             _setIsPlatform = setIsPlatform ?? throw new ArgumentNullException(nameof(setIsPlatform));
@@ -68,8 +65,7 @@ namespace FluentEcpay.Configurations
             }
             else throw new ArgumentNullException(nameof(algorithm));
 
-            _setHashKey(key);
-            _setHashIV(iv);
+            _setCheckMac(new CheckMac(key,iv));
 
             return _configuration;
         }

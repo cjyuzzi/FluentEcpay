@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace FluentEcpay.Interfaces
 {
     /// <summary>
@@ -8,6 +10,6 @@ namespace FluentEcpay.Interfaces
         /// <summary>
         /// 產生檢查碼。
         /// </summary>
-        string GetValue(IPayment payment, string hashKey, string hashIV, EHashAlgorithm encryptType);
+        string GetValue(IPayment payment, EHashAlgorithm encryptType = EHashAlgorithm.SHA256);
     }
 }
