@@ -29,12 +29,12 @@ namespace FluentEcpay.Web.Controllers
                 MerchantId = "2000132",
                 HashKey = "5294y06JbISpM5x9",
                 HashIV = "v77hoKGq4kWxNNIS",
-                ServerUrl = "https://tsem.com/api/payment/callback",
-                ClientUrl = "https://tsem.com/payment/success"
+                ServerUrl = "https://test.com/api/payment/callback",
+                ClientUrl = "https://test.com/payment/success"
             };
             var transaction = new
             {
-                No = "tsem00003",
+                No = "test00003",
                 Description = "測試購物系統",
                 Date = DateTime.Now,
                 Method = EPaymentMethod.Credit,
