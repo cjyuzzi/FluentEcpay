@@ -35,7 +35,7 @@ namespace FluentEcpay.Web.Controllers
             var transaction = new
             {
                 No = "tsem00003",
-                Description = "急診醫學會購物系統",
+                Description = "測試購物系統",
                 Date = DateTime.Now,
                 Method = EPaymentMethod.Credit,
                 Items = new List<Item>{
@@ -81,7 +81,7 @@ namespace FluentEcpay.Web.Controllers
         {
             var hashKey = "5294y06JbISpM5x9";
             var hashIV = "v77hoKGq4kWxNNIS";
-            
+
             // 務必判斷檢查碼是否正確。
             if (!CheckMac.PaymentResultIsValid(result, hashKey, hashIV)) return BadRequest();
 
