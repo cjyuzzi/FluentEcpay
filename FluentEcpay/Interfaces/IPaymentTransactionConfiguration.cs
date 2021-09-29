@@ -10,8 +10,9 @@ namespace FluentEcpay.Interfaces
     {
         /// <summary>
         /// 建立新的綠界交易訂單，需要傳入訂單編號、描述以及日期。
+        /// 可自訂特店編號最大長度，最長不可超過20字元
         /// </summary>
-        IPaymentConfiguration New(string no, string description, DateTime? date, string remark = null);
+        IPaymentConfiguration New(string no, string description, DateTime? date, int maxLength = 20, string remark = null);
         /// <summary>
         /// 指定綠界訂單交易所使用的付款方式。
         /// </summary>
