@@ -29,8 +29,8 @@ namespace FluentEcpay.Configurations
         {
             if (string.IsNullOrEmpty(no)) throw new ArgumentNullException(nameof(no));
 
-            if (no.Length >= tradeNoMaxLength) throw new ArgumentOutOfRangeException(nameof(no));
-            if (maxLength >= tradeNoMaxLength) throw new ArgumentOutOfRangeException(nameof(maxLength));
+            if (no.Length > tradeNoMaxLength) throw new ArgumentOutOfRangeException(nameof(no));
+            if (maxLength > tradeNoMaxLength) throw new ArgumentOutOfRangeException(nameof(maxLength));
 
             if (string.IsNullOrEmpty(description)) throw new ArgumentNullException(nameof(description));
             if (!date.HasValue) throw new ArgumentNullException(nameof(date));
