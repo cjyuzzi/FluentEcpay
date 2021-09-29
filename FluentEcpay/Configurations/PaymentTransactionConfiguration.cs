@@ -13,6 +13,8 @@ namespace FluentEcpay.Configurations
         private readonly Action<IPayment> _setPayment;
         private IPayment _payment;
         private Random random = new Random();
+        //自訂特店編號最大長度
+        private const int tradeNoMaxLength = 20;
         #endregion
 
         #region CTOR
@@ -23,15 +25,19 @@ namespace FluentEcpay.Configurations
         }
         #endregion
 
-        public IPaymentConfiguration New(string no, string description, DateTime? date, string remark = null)
+        public IPaymentConfiguration New(string no, string description, DateTime? date, int maxLength = 20, string remark = null)
         {
             if (string.IsNullOrEmpty(no)) throw new ArgumentNullException(nameof(no));
+
+            if (no.Length >= tradeNoMaxLength) throw new ArgumentOutOfRangeException(nameof(no));
+            if (maxLength >= tradeNoMaxLength) throw new ArgumentOutOfRangeException(nameof(maxLength));
+
             if (string.IsNullOrEmpty(description)) throw new ArgumentNullException(nameof(description));
             if (!date.HasValue) throw new ArgumentNullException(nameof(date));
 
             _payment = new Payment
             {
-                MerchantTradeNo = GenerateTradeNo(no),
+                MerchantTradeNo = GenerateTradeNo(no, maxLength),
                 TradeDesc = HttpUtility.UrlEncode(description),
                 MerchantTradeDate = date.Value.ToString("yyyy/MM/dd HH:mm:ss")
             };
@@ -100,9 +106,9 @@ namespace FluentEcpay.Configurations
         }
 
         #region Private Methods
-        private string GenerateTradeNo(string no)
+        private string GenerateTradeNo(string no, int tradeNoMaxLength)
         {
-            var randomLength = 20 - no.Length;
+            var randomLength = tradeNoMaxLength - no.Length;
             return no + GenerateRandomNo(randomLength);
         }
         private string GenerateRandomNo(int length)
