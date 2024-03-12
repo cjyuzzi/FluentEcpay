@@ -39,6 +39,7 @@ IPayment actual = new PaymentConfiguration()
         description: <TradeDescription>,
         date: <TradeDate>,
         remark: null,
+        maxLength: 20,
         isNewNo: true)
     .Transaction.UseMethod(
         method: <Method>,
